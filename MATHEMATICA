@@ -1,0 +1,37 @@
+## MATHEMATICA 9 RANDOM WALK 3D
+f[x_] := PDF[NormalDistribution[0, 10], x]
+Plot3D[PDF[NormalDistribution[15, 20], {x}] PDF[NormalDistribution[0, 10], {y}], {x, -100, 100}, {y, -100, 100},PlotRange -> All, PlotPoints -> 35] ## PLOT DE UNA DISTRIBUCION BIDIMENCIONAL##
+
+RandomWalk3DLattice[N_] := Module[{l = {{0, 0, 0}}, x = {0, 0, 0}, r, paso},
+    Do[
+   paso = 0.1;
+       r = Random[];
+       x += Which[
+           r <= 1/6, {1, 0, -1 paso},
+           r <= 2/6, {0, 1, -1 paso},
+           r <= 3/6, {0, 0, -1 paso},
+           r <= 4/6, {-1, 0, -1 paso},
+           r <= 5/6, {0, -1, -1 paso},
+           r <= 6/6, {0, 0, -1 paso}
+         ];
+       l = Append[l, x],
+       {N}
+     ];
+    l
+  ]
+  
+  
+rw = RandomWalk3DLattice[10000];
+rw1 = RandomWalk3DLattice[10000];
+rw2 = RandomWalk3DLattice[10000];
+rw3 = RandomWalk3DLattice[10000];
+rw4 = RandomWalk3DLattice[10000];
+rw5 = RandomWalk3DLattice[10000];
+Show[{Graphics3D[{Line[rw], {PointSize[.05], Point[rw[[-1]]]}},Axes -> True],
+  Graphics3D[{Hue[0.1], {Line[rw5]}, {Hue[0.1], PointSize[.05],Point[rw5[[-1]]]}}, Axes -> True],
+  Graphics3D[{Hue[0.8], {Line[rw4]}, {Hue[0.8], PointSize[.05],Point[rw4[[-1]]]}}, Axes -> True], 
+  Graphics3D[{Hue[0.7], {Line[rw2]}, {Hue[0.7], PointSize[.05],Point[rw2[[-1]]]}}, Axes -> True],
+  Graphics3D[{Hue[0.3], {Line[rw3]}, {Hue[0.3], PointSize[.05],Point[rw3[[-1]]]}}, Axes -> True], 
+  Graphics3D[{Hue[0.9], {Line[rw1]}, {Hue[0.9], PointSize[.05],Point[rw1[[-1]]]}}, Axes -> True]}, AspectRatio -> Automatic]
+
+
